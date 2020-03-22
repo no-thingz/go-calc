@@ -5,8 +5,8 @@ import (
 )
 
 type Number struct {
-	NumA      float64 `json:"num_a"`
-	NumB      float64 `json:"num_b"`
+	NumA      float64 `json:"a"`
+	NumB      float64 `json:"b"`
 	Result    float64 `json:"result"`
 	ErrorText string  `json:"error_text"`
 }
