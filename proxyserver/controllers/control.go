@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"net/url"
+	"regexp"
 )
 
 type calculateNumber struct {
@@ -29,13 +30,20 @@ func getProxyURL() string {
 }
 
 func RegisterControllers() {
-	http.HandleFunc("/calculator.sum", handleRequestAndRedirect)
-	http.HandleFunc("/calculator.sub", handleRequestAndRedirect)
-	http.HandleFunc("/calculator.mul", handleRequestAndRedirect)
-	http.HandleFunc("/calculator.div", handleRequestAndRedirect)
+
+	http.HandleFunc("/", handleRequestAndRedirect)
+
 }
 
 func handleRequestAndRedirect(w http.ResponseWriter, r *http.Request) {
+	var validPath = regexp.MustCompile(`^/calculator\.(sum|sub|mul|div)$`)
+	m := validPath.FindStringSubmatch(r.URL.Path)
+	if m == nil {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("Invalid Endpoint"))
+		return
+	}
+
 	url := getProxyURL()
 	err := validateRequestBody(r)
 	if err != nil {
