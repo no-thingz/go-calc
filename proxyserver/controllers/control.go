@@ -12,8 +12,8 @@ import (
 )
 
 type calculateNumber struct {
-	NumA float64 `json:"num_a"`
-	NumB float64 `json:"num_b"`
+	NumA float64 `json:"a"`
+	NumB float64 `json:"b"`
 }
 
 var (
